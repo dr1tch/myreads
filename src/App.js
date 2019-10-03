@@ -1,14 +1,22 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import {Route, Link} from 'react-router-dom'
+import PropTypes from 'prop-types'
 import './App.css'
 import Search from './components/Search'
 import Bookshelf from './components/Bookshelf'
-
+import getAll from './Library'
 
 class BooksApp extends React.Component {
-  state = {
 
+  bookshelves = [
+    { key: 'currentlyReading', name: 'Currently Reading' },
+    { key: 'wantToRead', name: 'Want to Read' },
+    { key: 'read', name: 'Have Read' },
+  ];
+
+  state = {
+    books: getAll;
   };
 
   render() {
