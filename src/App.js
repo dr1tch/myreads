@@ -7,18 +7,21 @@ import Search from './components/Search'
 import Bookshelf from './components/Bookshelf'
 import getAll from './Library'
 
+
 class BooksApp extends React.Component {
 
-  bookshelves = [
-    { key: 'currentlyReading', name: 'Currently Reading' },
-    { key: 'wantToRead', name: 'Want to Read' },
-    { key: 'read', name: 'Have Read' },
-  ];
-
   state = {
-    books: getAll;
+    books: []
   };
 
+  /* Set the initial state of the page by getting all books */
+  componentDidMount(){
+    BooksAPI.getAll().then((books) => {
+      this.setState({
+        books : books
+      });
+    })
+  }
   render() {
     return (
       <div className="app">
@@ -30,7 +33,7 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <Bookshelf/>
+                  <Bookshelf books={this.state.books}/>
                 </div>
               </div>
               <div className="open-search">
