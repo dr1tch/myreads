@@ -7,14 +7,19 @@ import PropTypes from 'prop-types'
 class Bookshelf extends React.Component {
 
   static propTypes = {
-        book: PropTypes.object.isRequired
+        books: PropTypes.array.isRequired,
+        onBookshelfChange: PropTypes.func.isRequired
+
     }
 
+    handleBookshelfChange = (book, shelf) => {
+      this.props.onBookshelfChange(book, shelf);
+    }
 
   render(){
     let currentlyReading;
     const books = this.props.books;
-    console.log(books);
+    console.log(this.props);
     return(
 
           <div className="bookshelf">
@@ -26,7 +31,10 @@ class Bookshelf extends React.Component {
                 ).map((b) => (
                   <li key={b.id}>
                             <Books
+                                title="Currently Reading"
+                                cat="currentlyReading"
                                 book={b}
+                                onHandleBookshelfChange = {this.handleBookshelfChange}
                             />
                         </li>
                 ))
@@ -41,7 +49,10 @@ class Bookshelf extends React.Component {
               ).map((b) => (
                 <li key={b.id}>
                           <Books
+                              title="Want to Read"
+                              cat="wantToRead"
                               book={b}
+                              onHandleBookshelfChange = {this.handleBooksheldChange}
                           />
                       </li>
               ))
@@ -56,7 +67,10 @@ class Bookshelf extends React.Component {
               ).map((b) => (
                 <li key={b.id}>
                           <Books
+                              title="Read"
+                              cat="read"
                               book={b}
+                              onHandleBookshelfChange = {this.handleBookshelfChange}
                           />
                       </li>
               ))
