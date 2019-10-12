@@ -10,6 +10,12 @@ import getAll from './Library'
 
 class BooksApp extends React.Component {
 
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
+  };
+
+
   state = {
     books: []
   };
@@ -18,24 +24,34 @@ class BooksApp extends React.Component {
   componentDidMount(){
     BooksAPI.getAll().then((books) => {
       this.setState({
-        books : books
+        books
       });
     })
   }
 
-  updateShelf = (book, newShelf) => {
-    book.props.book.shelf = newShelf;
+  changeShelf = (changedBook, shelf) => {
+    BooksAPI.update(changedBook, shelf).then(response => {
+      // set shelf for new or updated book
+      changedBook.shelf = shelf;
+      // update state with changed book
+      this.setState(prevState => ({
+        books: prevState.books
+          // remove updated book from array
+          .filter(book => book.id !== changedBook.id)
+          // add updated book to array
+          .concat(changedBook)
+      }));
+    });
+    console.log(`changedBook: ${changedBook}`);
+    console.log(`shelf: ${shelf}`);
+    console.log(`books ${this.state.books}`);
+  };
 
-    this.setState( (state) =>  ({
-      books: state.books.filter((b)=>(b.id !== book.props.book.id)).concat([book.props.book])
-    }))
-
-    BooksAPI.update(book.props.book, newShelf);
-  }
 
 
 
   render() {
+    const { books } = this.state;
     return (
       <div className="app">
 
@@ -47,8 +63,8 @@ class BooksApp extends React.Component {
               <div className="list-books-content">
                 <div>
                   <Bookshelf
-                      books={this.state.books}
-                      onBookshelfChange={this.updateShelf}/>
+                      books={books}
+                      bookshelfChange={this.changeShelf}/>
                 </div>
               </div>
               <div className="open-search">

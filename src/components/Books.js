@@ -6,19 +6,14 @@ import PropTypes from 'prop-types'
 
 class Books extends React.Component {
 
-  static propTypes = {
-        book: PropTypes.object.isRequired,
-        onHandleBookshelfChange: PropTypes.func.isRequired
-    }
 
-  handleShelfChange = (book, shelf) => {
-    this.props.onHandleBookshelfChange(book, shelf);
-  }
+
   render(){
-    const book = this.props.book;
-    //console.log(book);
+    const {book, shelfChange} = this.props;
+     console.log(book);
+     console.log(shelfChange);
     const { title } = this.props.book;
-    console.log(this.props );
+    //console.log(this.props.book.shelf);
         if(this.props.book.authors !== undefined && Array.isArray(this.props.book.authors) && this.props.book.authors.length > 1) {
             this.props.book.authors = this.props.book.authors.join(' and ');
         } else if (this.props.book.authors !== undefined && Array.isArray(this.props.book.authors)) {
@@ -44,7 +39,7 @@ class Books extends React.Component {
 
            <ChangeShelf
                 books = {book}
-                onHandleShelfChange = {this.handleShelfChange}/>
+                shelfChange = {shelfChange}/>
         </div>
         <div className="book-title">{book.title}</div>
         <div className="book-authors">{book.authors}</div>
@@ -52,4 +47,9 @@ class Books extends React.Component {
     )
   }
 }
+
+Books.propTypes = {
+      book: PropTypes.object.isRequired,
+      shelfChange: PropTypes.func.isRequired
+  }
 export default Books

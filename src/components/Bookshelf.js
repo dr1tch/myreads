@@ -6,20 +6,21 @@ import PropTypes from 'prop-types'
 
 class Bookshelf extends React.Component {
 
-  static propTypes = {
-        books: PropTypes.array.isRequired,
-        onBookshelfChange: PropTypes.func.isRequired
-
-    }
-
-    handleBookshelfChange = (book, shelf) => {
-      this.props.onBookshelfChange(book, shelf);
-    }
-
   render(){
     let currentlyReading;
     const books = this.props.books;
-    console.log(this.props);
+    const shelfChange = this.props.bookshelfChange;
+
+    const shelfTypes = [
+      { type: 'currentlyReading', title: 'Currently Reading' },
+      { type: 'wantToRead', title: 'Want to Read' },
+      { type: 'read', title: 'Read' }
+    ];
+
+    // console.log(books);
+    // console.log(shelfChange);
+
+
     return(
 
           <div className="bookshelf">
@@ -33,8 +34,8 @@ class Bookshelf extends React.Component {
                             <Books
                                 title="Currently Reading"
                                 cat="currentlyReading"
-                                book={b}
-                                onHandleBookshelfChange = {this.handleBookshelfChange}
+                                book = {b}
+                                shelfChange = {shelfChange}
                             />
                         </li>
                 ))
@@ -51,8 +52,8 @@ class Bookshelf extends React.Component {
                           <Books
                               title="Want to Read"
                               cat="wantToRead"
-                              book={b}
-                              onHandleBookshelfChange = {this.handleBooksheldChange}
+                              book = {b}
+                              shelfChange = {shelfChange}
                           />
                       </li>
               ))
@@ -69,8 +70,8 @@ class Bookshelf extends React.Component {
                           <Books
                               title="Read"
                               cat="read"
-                              book={b}
-                              onHandleBookshelfChange = {this.handleBookshelfChange}
+                              book = {b}
+                              shelfChange = {shelfChange}
                           />
                       </li>
               ))
@@ -78,8 +79,13 @@ class Bookshelf extends React.Component {
               </ol>
             </div>
           </div>
-
     )
   }
 }
+
+Bookshelf.propTypes = {
+      books: PropTypes.array.isRequired,
+      bookshelfChange: PropTypes.func.isRequired
+  }
+
 export default Bookshelf

@@ -4,6 +4,8 @@ import {Route, Link} from 'react-router-dom'
 class Search extends React.Component {
 
   render(){
+
+    /* // TODO: Implement the Search Componenet */
     return(
       <div className="search-books">
         <div className="search-books-bar">
